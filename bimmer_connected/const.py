@@ -52,9 +52,9 @@ APP_VERSIONS = {
 HTTPX_TIMEOUT = 30.0
 
 USER_AGENTS = {
-    Regions.NORTH_AMERICA: "okhttp/4.12.0",
-    Regions.REST_OF_WORLD: "okhttp/4.12.0",
-    Regions.CHINA: "okhttp/4.12.0",
+    Regions.NORTH_AMERICA: "Dart/3.3 (dart:io)",
+    Regions.REST_OF_WORLD: "Dart/3.3 (dart:io)",
+    Regions.CHINA: "Dart/3.3 (dart:io)",
 }
 # Android version used for x-user-agent construction for non-iOS clients
 ANDROID_VERSION = "13"
