@@ -3,7 +3,14 @@
 from base64 import b64decode
 from typing import List
 
-from bimmer_connected.const import APP_VERSIONS, OCP_APIM_KEYS, SERVER_URLS_MYBMW, USER_AGENTS, Regions
+from bimmer_connected.const import (
+    ANDROID_VERSION,
+    APP_VERSIONS,
+    OCP_APIM_KEYS,
+    SERVER_URLS_MYBMW,
+    USER_AGENTS,
+    Regions,
+)
 
 
 def valid_regions() -> List[str]:
@@ -30,6 +37,14 @@ def get_server_url(region: Regions) -> str:
 def get_user_agent(region: Regions) -> str:
     """Get the Dart user agent for the region."""
     return USER_AGENTS[region]
+
+
+def build_x_user_agent(brand: str, app_version: str, region: Regions) -> str:
+    """Build x-user-agent with Android version and optional widget suffix for ROW."""
+    base = f"android({ANDROID_VERSION});{brand};{app_version};{region.value}"
+    if region == Regions.REST_OF_WORLD:
+        return f"{base};widget"
+    return base
 
 
 def get_app_version(region: Regions) -> str:

@@ -52,11 +52,13 @@ APP_VERSIONS = {
 HTTPX_TIMEOUT = 30.0
 
 USER_AGENTS = {
-    Regions.NORTH_AMERICA: "Dart/3.3 (dart:io)",
-    Regions.REST_OF_WORLD: "Dart/3.3 (dart:io)",
-    Regions.CHINA: "Dart/3.3 (dart:io)",
+    Regions.NORTH_AMERICA: "okhttp/4.12.0",
+    Regions.REST_OF_WORLD: "okhttp/4.12.0",
+    Regions.CHINA: "okhttp/4.12.0",
 }
-X_USER_AGENT = "android(AP2A.240605.024);{brand};{app_version};{region}"
+# Android version used for x-user-agent construction for non-iOS clients
+ANDROID_VERSION = "13"
+X_USER_AGENT = "android({android_version});{brand};{app_version};{region}"
 
 
 AUTH_CHINA_PUBLIC_KEY_URL = "/eadrax-coas/v1/cop/publickey"
