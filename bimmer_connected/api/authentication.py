@@ -15,15 +15,7 @@ import jwt
 from Crypto.Cipher import PKCS1_v1_5
 from Crypto.PublicKey import RSA
 
-from bimmer_connected.api.regions import (
-    Regions,
-    build_client_version,
-    build_x_user_agent,
-    get_app_version,
-    get_ocp_apim_key,
-    get_server_url,
-    get_user_agent,
-)
+from bimmer_connected.api.regions import Regions, get_app_version, get_ocp_apim_key, get_server_url, get_user_agent
 from bimmer_connected.api.utils import (
     create_s256_code_challenge,
     generate_cn_nonce,
@@ -41,6 +33,7 @@ from bimmer_connected.const import (
     AUTH_CHINA_TOKEN_URL,
     HTTPX_TIMEOUT,
     OAUTH_CONFIG_URL,
+    X_USER_AGENT,
 )
 from bimmer_connected.models import MyBMWAPIError, MyBMWCaptchaMissingError
 
@@ -225,8 +218,8 @@ class MyBMWAuthentication(httpx.Auth):
                 authenticate_url,
                 params={
                     "interaction-id": uuid4(),
-                    "client-version": build_client_version(
-                        brand="bmw", app_version=get_app_version(self.region), region=self.region
+                    "client-version": X_USER_AGENT.format(
+                        brand="bmw", app_version=get_app_version(self.region), region=self.region.value
                     ),
                 },
                 data=dict(oauth_base_values, **{"authorization": authorization}),
@@ -401,11 +394,7 @@ class MyBMWLoginClient(httpx.AsyncClient):
         kwargs["base_url"] = get_server_url(region)
         kwargs["headers"] = {
             "user-agent": get_user_agent(region),
-            "x-user-agent": build_x_user_agent(
-                brand="bmw",
-                app_version=get_app_version(region),
-                region=region,
-            ),
+            "x-user-agent": X_USER_AGENT.format(brand="bmw", app_version=get_app_version(region), region=region.value),
         }
 
         # Register event hooks
